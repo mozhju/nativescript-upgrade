@@ -8,7 +8,7 @@ declare module com {
                     // 
                     constructor(builder: any);
 
-                    static checkWithConfigure(activity: any, upgradeUrl: string, isAutoStartInstall: boolean,
+                    checkWithConfigure(activity: any, upgradeUrl: string, isAutoStartInstall: boolean,
                         isQuietDownload: boolean, isCheckPackageName: boolean, isAboutChecking: boolean, delay: number): void;
                 }
             }
@@ -17,7 +17,7 @@ declare module com {
 }
 
 
-export class UpgradeHelper {
+export class MyUpgradeHelper {
     private isAutoStartInstall: boolean;
     private isQuietDownload: boolean;
     private isCheckPackageName: boolean;
@@ -61,14 +61,13 @@ export class UpgradeHelper {
 
     // 开始检测，需要确保app 的 Activity已经生成
     public check(upgradeUrl: string, activity?: any): void {
+        var helper = new com.lijunhuayc.upgrade.helper.UpgradeHelper(null);
         if (activity) {
-            com.lijunhuayc.upgrade.helper.UpgradeHelper.checkWithConfigure(activity, upgradeUrl,
-                this.isAutoStartInstall, this.isQuietDownload, this.isCheckPackageName,
-                this.isAboutChecking, this.delay);
+            helper.checkWithConfigure(activity, upgradeUrl, this.isAutoStartInstall,
+                this.isQuietDownload, this.isCheckPackageName, this.isAboutChecking, this.delay);
         } else {
-            com.lijunhuayc.upgrade.helper.UpgradeHelper.checkWithConfigure(null, upgradeUrl,
-                this.isAutoStartInstall, this.isQuietDownload, this.isCheckPackageName,
-                this.isAboutChecking, this.delay);
+            helper.checkWithConfigure(null, upgradeUrl, this.isAutoStartInstall,
+                this.isQuietDownload, this.isCheckPackageName, this.isAboutChecking, this.delay);
         }
     }
 }

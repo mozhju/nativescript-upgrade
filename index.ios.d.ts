@@ -1,6 +1,6 @@
 
 
-export declare class UpgradeHelper {
+export declare class MyUpgradeHelper {
     constructor();    
 
     public setAutoStartInstall(isAutoStartInstall: boolean): void;

@@ -1,4 +1,4 @@
-# nativescript-ichi-mqtt
+# nativescript-upgrade
 
 upgrade for NativeScript.
 
@@ -19,10 +19,9 @@ tns plugin add nativescript-upgrade
 Here is a TypeScript example:
 
 ```js
-import {UpgradeHelper} from "nativescript-upgrade";
+import {MyUpgradeHelper} from "nativescript-upgrade";
 
-// new Mqtt Client
-var upgradeHelper = new UpgradeHelper();
+var upgradeHelper = new MyUpgradeHelper();
 upgradeHelper.check("http://www.upgrade.com/upgrade?version=3");
 
 ```

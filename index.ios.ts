@@ -1,6 +1,6 @@
 
 
-export class UpgradeHelper {
+export class MyUpgradeHelper {
 
     // 
     constructor()
