@@ -140,7 +140,7 @@ public class EasyDialogActivity extends BaseActivity {
                         LogUtils.d(TAG, "apkPath = " + apkPath);
                         LogUtils.d(TAG, "apkSize = " + apkFile.length());
                         LogUtils.d(TAG, "apkMD5 = " + MD5Utils.MD5EncodeFile(apkFile));
-                        if (upgradeInfoModel.getMd5().equals(MD5Utils.MD5EncodeFile(apkFile))) {
+                        if (upgradeInfoModel.getMd5().toLowerCase().equals(MD5Utils.MD5EncodeFile(apkFile))) {
                             installAPK(apkFile);
                         } else {
                             MyToast.showToast(getString(R.string.upgrade_info_exception));

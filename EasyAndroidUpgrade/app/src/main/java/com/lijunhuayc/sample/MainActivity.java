@@ -24,14 +24,14 @@ public class MainActivity extends FragmentActivity {
         context = this;
         downloadpathText = (EditText) this.findViewById(R.id.path);//仅仅测试下载用的APK(使用者无需关注)
 //        downloadpathText.setText("http://221.236.21.155/imtt.dd.qq.com/16891/5C119BDFA17906E5D6F45BDF932460BB.apk?mkey=57d63b47fb8efb5e&f=3580&c=0&fsname=com.shangyi.postop.paitent.android_4.2.0.0_18.apk&hsr=4d5s&p=.apk");
-        downloadpathText.setText("http://future-service.oss-cn-hangzhou.aliyuncs.com/apk/app-future-release_110_jiagu_sign.apk");
+        downloadpathText.setText("http://192.168.1.79:9000/takeout/upgrade?version=1.0.0");
 
         init();//使用者只需关注此方法中的代码
     }
 
     private void init() {
         new UpgradeHelper.Builder(this)
-                .setUpgradeUrl("http://192.168.1.79/public/upgrade.html?version=3")
+                .setUpgradeUrl("http://192.168.1.79:9000/takeout/upgrade?version=1.0.0")
                 .setDelay(1000)
                 .setIsAboutChecking(true)//关于页面手动检测更新需要设置isAboutChecking(true), 启动时检测设为false
                 .build().check();

@@ -29,12 +29,53 @@ public class UpgradeHelper {
     private boolean isRegisterBR;
     private BroadcastReceiver broadcastReceiver;
 
-    private UpgradeHelper(Builder builder) {
-        this.mContext = builder.getContext();
-        this.config = builder.getConfig();
-        LocalAppInfo.init(mContext);
-        MyToast.init(mContext);
-        SharedPreferencesUtils.init(mContext);
+    public UpgradeHelper(Builder builder) {
+        if (builder != null) {
+            this.mContext = builder.getContext();
+            this.config = builder.getConfig();
+            LocalAppInfo.init(mContext);
+            MyToast.init(mContext);
+            SharedPreferencesUtils.init(mContext);
+        }
+    }
+
+    public Application getApplication()  {
+        try {
+            Class<?> mClass = Class.forName("android.app.ActivityThread");
+            Method currentActivityThread = mClass.getMethod("currentActivityThread");
+            Method getApplication = mClass.getMethod("getApplication");
+
+            Object activityThread = currentActivityThread.invoke(null);
+
+            return (Application) getApplication.invoke(activityThread);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public void checkWithConfigure(Context mContext, String upgradeUrl, boolean isAutoStartInstall,
+         boolean isQuietDownload, boolean isCheckPackageName, boolean isAboutChecking, long delay)
+    {
+        if (mContext == null) {
+            this.mContext = getApplication().getApplicationContext();
+        } else {
+            this.mContext = mContext;
+        }
+
+        LocalAppInfo.init(this.mContext);
+        MyToast.init(this.mContext);
+        SharedPreferencesUtils.init(this.mContext);
+
+        this.config = new UpgradeConfig();
+        this.config.setUpgradeUrl(upgradeUrl);
+        this.config.setAutoStartInstall(isAutoStartInstall);
+        this.config.setQuietDownload(isQuietDownload);
+        this.config.setCheckPackageName(isCheckPackageName);
+        this.config.setAboutChecking(isAboutChecking);//关于页面手动检测更新需要设置isAboutChecking(true), 启动时检测设为false
+        this.config.setDelay(delay);
+
+        check();
     }
 
     public void check() {
@@ -65,27 +106,8 @@ public class UpgradeHelper {
         private UpgradeConfig config;
 
         public Builder(Context mContext) {
-            if (mContext == null) {
-                this.mContext = getApplication().getApplicationContext();
-            } else {
-                this.mContext = mContext.getApplicationContext();
-            }
+            this.mContext = mContext.getApplicationContext();
             config = new UpgradeConfig();
-        }
-
-        public Application getApplication()  {
-            try {
-                Class<?> mClass = Class.forName("android.app.ActivityThread");
-                Method currentActivityThread = mClass.getMethod("currentActivityThread");
-                Method getApplication = mClass.getMethod("getApplication");
-
-                Object activityThread = currentActivityThread.invoke(null);
-
-                return (Application) getApplication.invoke(activityThread);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            return null;
         }
 
         Context getContext() {
